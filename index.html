@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdziosWorks | Wydruki 3D & Praktyczne Projekty na Co Dzień</title>
+  <meta name="description"
+    content="AdziosWorks – Wydruki 3D, personalizowane ramki na medale, funkcjonalne gadżety oraz wycena i druk z własnych plików STL / STEP.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Background Glow & Grid Canvas -->
+  <div class="bg-glow-orb orb-1"></div>
+  <div class="bg-glow-orb orb-2"></div>
+  <div class="bg-grid-pattern"></div>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="container announcement-content">
+      <p>🚀 <strong>Status pracowni:</strong> Przyjmuję zamówienia z katalogu oraz wyceniam pliki STL</p>
+      <div class="quick-links">
+        <a href="#wycena-projektu" class="quick-link">Zleć wycenę pliku STL &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Header -->
+  <header class="site-header" id="header">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo" id="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="10" fill="#161B22" stroke="rgba(255,122,0,0.3)" stroke-width="1.5" />
+            <path d="M12 28L20 32L28 28L20 24L12 28Z" fill="#FF7A00" fill-opacity="0.3" stroke="#FF7A00"
+              stroke-width="1.5" />
+            <path d="M12 22L20 26L28 22L20 18L12 22Z" fill="#FF7A00" fill-opacity="0.6" stroke="#FF7A00"
+              stroke-width="1.5" />
+            <path d="M12 16L20 20L28 16L20 12L12 16Z" fill="#00F0FF" stroke="#00F0FF" stroke-width="1.5" />
+            <line x1="20" y1="6" x2="20" y2="12" stroke="#00F0FF" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="brand-name">ADZIOS<span class="accent-orange">WORKS</span></span>
+          <span class="brand-tag">WYDRUKI 3D</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="desktop-nav">
+        <a href="#projekty" class="nav-link">Katalog</a>
+        <a href="#wycena-projektu" class="btn btn-outline btn-sm nav-outline-btn">Wyceń wydruk modelu</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <a href="#kontakt" class="nav-link">Kontakt</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <button class="wishlist-btn" id="wishlistToggleBtn" title="Twoje polubione projekty">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+            </path>
+          </svg>
+          <span class="wishlist-badge" id="wishlistCount">0</span>
+        </button>
+
+        <a href="#projekty" class="btn btn-primary btn-sm" id="headerShopBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>Sklep</span>
+        </a>
+
+        <!-- Mobile Menu Hamburger -->
+        <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Otwórz menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-content">
+      <nav class="mobile-nav">
+        <a href="#projekty" class="mobile-nav-link">📦 Katalog</a>
+        <a href="#wycena-projektu" class="mobile-nav-link">📐 Wyceń wydruk modelu</a>
+        <a href="#faq" class="mobile-nav-link">❓ FAQ</a>
+        <a href="#kontakt" class="mobile-nav-link">✉️ Kontakt</a>
+      </nav>
+      <div class="mobile-drawer-cta">
+        <a href="#projekty" class="btn btn-primary w-full">Przejdź do Sklepu</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="home">
+    <div class="container hero-grid">
+      <div class="hero-text-col">
+        <div class="hero-pill-badge">
+          <span class="badge-dot"></span>
+          <span>Praktyczny Druk 3D</span>
+        </div>
+        <h1 class="hero-title">
+          Druk 3D, który <span class="gradient-text-orange">naprawdę działa</span>
+        </h1>
+        <p class="hero-desc">
+          Czołem, jestem <strong>Adrian</strong>. Druk 3D to moje hobby, a praktyczność to mój priorytet. Projektuję
+          proste, przemyślane przedmioty, które ułatwiają codzienne życie albo po prostu cieszą oko.
+        </p>
+
+        <!-- Hero CTAs -->
+        <div class="hero-cta-group">
+          <a href="#projekty" class="btn btn-primary btn-lg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Zobacz Gotowe Projekty</span>
+          </a>
+          <a href="#wycena-projektu" class="btn btn-outline btn-lg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="12" y1="18" x2="12" y2="12"></line>
+              <line x1="9" y1="15" x2="15" y2="15"></line>
+            </svg>
+            <span>Wgraj plik i poznaj wycenę</span>
+          </a>
+        </div>
+
+        <!-- Trust / Stats Bar -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-num">800+</span>
+            <span class="stat-label">Wysłanych wydruków</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item stat-wide">
+            <span class="stat-num">5.0 ⭐⭐⭐⭐⭐</span>
+            <span class="stat-label">Opinie Allegro Lokalnie & Vinted</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-num">24-48h ⚡</span>
+            <span class="stat-label">Szybka realizacja</span>
+          </div>
+        </div>
+
+        <!-- Platform Badges -->
+        <div class="platform-strip">
+          <span class="platform-strip-title">Kupuj bezpośrednio na ulubionych platformach:</span>
+          <div class="platform-tags">
+            <a href="https://allegrolokalnie.pl/uzytkownik/Adzios_240" target="_blank" rel="noopener" class="platform-tag allegro" title="Otwórz profil Allegro Lokalnie w nowej karcie">Allegro Lokalnie ↗</a>
+            <a href="https://www.vinted.pl/member/271862613" target="_blank" rel="noopener" class="platform-tag vinted" title="Otwórz profil Vinted w nowej karcie">Vinted ↗</a>
+            <a href="https://www.olx.pl/oferty/uzytkownik/2Mkzkp/" target="_blank" rel="noopener" class="platform-tag olx" title="Otwórz profil OLX w nowej karcie">OLX ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Interactive Showcase -->
+      <div class="hero-visual-col">
+        <div class="hero-visual-card">
+          <div class="visual-card-glow"></div>
+          <div class="visual-header">
+            <div class="visual-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="visual-status-pill">
+              <span class="pulse-green"></span>
+              <span>Drukarka w trakcie pracy • Warstwa <strong id="currentLayerVal">284</strong>/<span
+                  id="totalLayerVal">450</span></span>
+            </div>
+          </div>
+
+          <!-- Pure 3D Printer Graphic & Animation -->
+          <div class="printer-stage" id="printerStage">
+            <div class="printer-machine">
+              <div class="printer-frame">
+                <!-- Top & Bottom Frame Rails -->
+                <div class="frame-rail rail-top"></div>
+                <div class="frame-rail rail-bottom"></div>
+
+                <!-- Vertical Z Rods & Screw Leads -->
+                <div class="rod rod-left"></div>
+                <div class="rod rod-right"></div>
+                <div class="screw screw-left"></div>
+                <div class="screw screw-right"></div>
+
+                <!-- X-Axis Gantry Beam & Extruder Toolhead -->
+                <div class="gantry-beam">
+                  <div class="toolhead">
+                    <div class="ptfe-tube"></div>
+                    <div class="toolhead-body">
+                      <div class="fan-grill"></div>
+                      <div class="status-led"></div>
+                    </div>
+                    <div class="heatsink"></div>
+                    <div class="brass-nozzle"></div>
+                    <div class="extrusion-glow"></div>
+                  </div>
+                </div>
+
+                <!-- Print Bed & 3D Printed Model -->
+                <div class="bed-assembly">
+                  <div class="printed-model-3d">
+                    <svg viewBox="0 0 160 130" class="model-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="printGlowGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+                          <stop offset="0%" stop-color="#FF7A00" stop-opacity="0.9" />
+                          <stop offset="70%" stop-color="#00F0FF" stop-opacity="0.9" />
+                          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="1" />
+                        </linearGradient>
+                      </defs>
+                      <!-- Base 3D Printed Structure Layers -->
+                      <polygon points="30,95 80,118 130,95 80,72" fill="rgba(255,122,0,0.25)" stroke="#FF7A00"
+                        stroke-width="1.8" />
+                      <polygon points="30,95 80,118 80,88 30,65" fill="rgba(255,122,0,0.35)" stroke="#FF7A00"
+                        stroke-width="1.8" />
+                      <polygon points="130,95 80,118 80,88 130,65" fill="rgba(0,240,255,0.35)" stroke="#00F0FF"
+                        stroke-width="1.8" />
+
+                      <!-- Mid Layer Building Up -->
+                      <polygon points="45,72 80,88 115,72 80,56" fill="rgba(255,122,0,0.35)" stroke="#FF7A00"
+                        stroke-width="1.8" />
+                      <polygon points="45,72 80,88 80,62 45,46" fill="rgba(255,122,0,0.45)" stroke="#FF7A00"
+                        stroke-width="1.8" />
+                      <polygon points="115,72 80,88 80,62 115,46" fill="rgba(0,240,255,0.45)" stroke="#00F0FF"
+                        stroke-width="1.8" />
+
+                      <!-- Top Active Layer Being Extruded Right Now -->
+                      <polygon points="55,50 80,62 105,50 80,38" fill="url(#printGlowGrad)" stroke="#FFFFFF"
+                        stroke-width="2" class="active-layer-glow" />
+                      <!-- Hotend Contact Point -->
+                      <circle cx="80" cy="50" r="4" fill="#FFFFFF" class="nozzle-contact-glow">
+                        <animate attributeName="r" values="3;6;3" dur="0.8s" repeatCount="indefinite" />
+                      </circle>
+                    </svg>
+                  </div>
+
+                  <!-- PEI Heated Print Bed -->
+                  <div class="pei-plate">
+                    <div class="plate-grid"></div>
+                  </div>
+                  <div class="bed-base"></div>
+                  <div class="bed-knob knob-l"></div>
+                  <div class="bed-knob knob-r"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories / Filter Section (Katalog) -->
+  <section class="catalog-section" id="projekty">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-pill">Katalog Produktów</div>
+        <h2 class="section-title">Zobacz, co <span class="gradient-text-orange">zeszpąciłem...</span></h2>
+      </div>
+
+      <!-- Search & Filters Toolbar -->
+      <div class="catalog-toolbar">
+        <div class="search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput"
+            placeholder="Szukaj projektu (np. medal, bieg, uchwyt, kable, magsafe)...">
+          <button class="clear-search-btn" id="clearSearchBtn" style="display:none;">&times;</button>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="category-pills" id="categoryPills">
+        <button class="category-btn active" data-category="all">
+          <span>Wszystkie</span>
+          <span class="cat-count" id="countAll">0</span>
+        </button>
+        <button class="category-btn" data-category="sport">
+          <span>🏆 Medale & Pamiątki</span>
+          <span class="cat-count" id="countSport">0</span>
+        </button>
+        <button class="category-btn" data-category="biurko">
+          <span>🖥️ Biurko</span>
+          <span class="cat-count" id="countBiurko">0</span>
+        </button>
+        <button class="category-btn" data-category="auto">
+          <span>🚗 Samochód</span>
+          <span class="cat-count" id="countAuto">0</span>
+        </button>
+        <button class="category-btn" data-category="dom">
+          <span>🏠 Dom & Kuchnia</span>
+          <span class="cat-count" id="countDom">0</span>
+        </button>
+      </div>
+
+      <!-- Active Filters Display -->
+      <div class="active-filter-indicator" id="activeFilterIndicator" style="display:none;">
+        <span>Filtrujesz po: <strong id="filterNameText">Wszystkie</strong></span>
+        <button id="resetFiltersBtn" class="btn-text">Wyczyść filtry</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="productsGrid">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="empty-icon">🔍</div>
+        <h3>Nie znaleziono projektów</h3>
+        <p>Spróbuj zmienić słowa kluczowe lub zresetować filtry kategorii.</p>
+        <button class="btn btn-outline" id="emptyResetBtn">Pokaż wszystkie projekty</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dedicated Custom File Upload & Quote Section -->
+  <section class="custom-quote-section" id="wycena-projektu">
+    <div class="container">
+      <div class="custom-quote-card">
+        <div class="quote-info-col">
+          <div class="section-pill">Druk Na Zamówienie</div>
+          <h2 class="section-title">Masz własny projekt? <span class="gradient-text-orange">Wyślij plik do wyceny</span>
+          </h2>
+          <p class="section-desc">
+            Pobrałeś model z <strong>Thingiverse, Printables, MakerWorld</strong> lub zaprojektowałeś własną część w
+            CAD? Załącz plik poniżej lub wklej link – bezpłatnie sprawdzę geometrię modelu i prześlę Ci dokładną wycenę.
+          </p>
+
+          <div class="quote-perks-list">
+            <div class="quote-perk-item">
+              <span class="perk-icon">🔍</span>
+              <div>
+                <strong>Bezpłatna weryfikacja techniczna</strong>
+                <p>Sprawdzam grubość ścianek, mosty i dobieram optymalne ułożenie na stole.</p>
+              </div>
+            </div>
+            <div class="quote-perk-item">
+              <span class="perk-icon">⚡</span>
+              <div>
+                <strong>Szybka odpowiedź i realizacja</strong>
+                <p>Wycenę otrzymasz zwykle w ciągu 2-3 godzin, a druk wysyłam w 24-48h.</p>
+              </div>
+            </div>
+            <div class="quote-perk-item">
+              <span class="perk-icon">📦</span>
+              <div>
+                <strong>Wysyłka Paczkomat InPost</strong>
+                <p>Bezpiecznie zapakowane przesyłki z numerem śledzenia (14.99 PLN).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Upload Form -->
+        <div class="quote-form-col">
+          <form id="customProjectForm" class="custom-project-form">
+            <!-- File Drag & Drop Zone -->
+            <div class="file-dropzone" id="customFileDropzone">
+              <input type="file" id="customFileInput" accept=".stl,.obj,.step,.stp,.3mf,.zip" class="file-input-hidden">
+              <div class="dropzone-content" id="dropzonePrompt">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FF7A00" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <div class="dropzone-text">
+                  <strong>Przeciągnij plik (.STL, .STEP, .OBJ, .3MF, .ZIP)</strong>
+                  <span>lub kliknij, aby wybrać z dysku</span>
+                </div>
+              </div>
+              <div class="file-selected-badge" id="customFileBadge" style="display:none;">
+                <span id="customFileNameDisplay">model.stl</span>
+                <button type="button" id="customRemoveFileBtn" class="remove-file">&times;</button>
+              </div>
+            </div>
+
+            <!-- Link alternative -->
+            <div class="form-group">
+              <label for="projectModelLink" class="form-label">Lub wklej link do modelu (opcjonalnie):</label>
+              <input type="url" id="projectModelLink" placeholder="np. https://makerworld.com/models/... lub Printables"
+                class="form-input">
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="projectMaterial" class="form-label">Preferowany materiał:</label>
+                <select id="projectMaterial" class="custom-select">
+                  <option value="PETG (Rekomendowany - wytrzymały)">PETG (Wytrzymały, uniwersalny)</option>
+                  <option value="PLA Pro (Estetyczny, gładki)">PLA Pro (Wysoka estetyka, mat)</option>
+                  <option value="TPU 95A (Elastyczna guma)">TPU (Elastyczna guma / tłumienie)</option>
+                  <option value="ASA (Odporny na upał i UV w aucie)">ASA (Do auta i na zewnątrz)</option>
+                  <option value="Nie wiem - doradź mi">Nie wiem – doradź mi najlepszy</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="projectColor" class="form-label">Kolor:</label>
+                <select id="projectColor" class="custom-select">
+                  <option value="Czarny Mat">🖤 Czarny Mat (Standard)</option>
+                  <option value="Biały">🤍 Biały</option>
+                  <option value="Szary / Grafit">🩶 Szary / Grafit</option>
+                  <option value="Neon Orange">🧡 Neon Orange</option>
+                  <option value="Silk Gold (Złoty)">✨ Silk Gold (Złoty)</option>
+                  <option value="Inny / Dowolny">Inny (podam w uwagach)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="projectQty" class="form-label">Ilość sztuk:</label>
+                <input type="number" id="projectQty" value="1" min="1" max="1000" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="projectContact" class="form-label">Twój e-mail lub telefon:*</label>
+                <input type="text" id="projectContact" required placeholder="np. jan@domena.pl lub nr tel"
+                  class="form-input">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="projectNotes" class="form-label">Dodatkowe uwagi / wymagania (opcjonalnie):</label>
+              <textarea id="projectNotes" rows="3"
+                placeholder="np. element musi wytrzymać obciążenie 5 kg, przeznaczenie do kontaktu z wodą, pasowanie pod śrubę M4..."
+                class="form-textarea"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full btn-lg" id="submitProjectBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              <span>Wyślij Plik do Bezpłatnej Wyceny</span>
+            </button>
+            <div id="projectQuoteFeedback" class="form-feedback" style="display:none;"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faq">
+    <div class="container faq-container">
+      <div class="section-header text-center">
+        <div class="section-pill">FAQ</div>
+        <h2 class="section-title">Często Zadawane <span class="gradient-text-cyan">Pytania</span></h2>
+      </div>
+
+      <div class="faq-accordion" id="faqAccordion">
+        <div class="faq-item active">
+          <button class="faq-question">
+            <span>Jak zamówić personalizowaną ramkę na medal z mojego biegu?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Wystarczy, że podasz mi: <strong>nazwę imprezy biegowej/zawodów</strong>, <strong>rok</strong> oraz
+              <strong>Twoje statystyki</strong> (dystans, tempo, czas końcowy). Jeśli masz plik GPX z zegarka/Stravy,
+              mogę wygenerować dokładny profil wysokościowy Twojej trasy!
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Jak przesłać własny plik STL do wyceny?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Możesz skorzystać z sekcji <strong><a href="#wycena-projektu"
+                  style="color: var(--accent-orange); text-decoration: underline;">Wycena Własnego Pliku</a></strong>
+              powyżej i przeciągnąć plik (.stl, .step, .obj, .3mf) lub wkleić link do projektu (Printables/MakerWorld).
+              W ciągu kilku godzin prześlę Ci wycenę i dobiorę najlepszy materiał.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Gdzie mogę kupić Twoje gotowe wydruki?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Moje projekty możesz kupić przez <strong>Allegro Lokalnie, Vinted, OLX</strong> lub pisząc do mnie
+              bezpośrednio przez formularz na stronie. Przy zamówieniu bezpośrednim oferuję szybką wysyłkę Paczkomatem
+              InPost (14,99 zł).</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Jak szybko wysyłasz zamówienia?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Większość popularnych modeli mam przygotowane od ręki lub drukuję w ciągu kilkunastu godzin. Projekty z
+              własnych plików wysyłam zwykle w <strong>24 do 48 godzin roboczych</strong>.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Czy mogę zamówić zmianę wymiarów lub inny kolor?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Tak! Jako autor projektów mogę łatwo dostosować średnice otworów, szerokość uchwytu, grubość blatu pod
+              Twoje biurko czy dodać spersonalizowany napis. Wystarczy napisać w formularzu kontaktowym.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact & Inquiry Form Section -->
+  <section class="contact-section" id="kontakt">
+    <div class="container">
+      <div class="contact-card">
+        <div class="contact-info-col">
+          <div class="section-pill">Kontakt & Zamówienia</div>
+          <h2 class="section-title">Napisz do mnie – <span class="gradient-text-orange">zrealizujmy Twój projekt</span>
+          </h2>
+          <p class="contact-desc">
+            Chcesz zamówić personalizowaną ramkę na medal, modyfikację któregoś modelu z katalogu lub omówić
+            niestandardowy pomysł? Odpowiadam zazwyczaj w ciągu 2–3 godzin.
+          </p>
+
+          <div class="contact-methods">
+            <div class="method-item">
+              <div class="method-icon">📍</div>
+              <div>
+                <strong>Lokalizacja</strong>
+                <span>Polska (Wysyłka Paczkomaty InPost / Kurier)</span>
+              </div>
+            </div>
+            <div class="method-item">
+              <div class="method-icon">📦</div>
+              <div>
+                <strong>Wysyłka</strong>
+                <span>Paczkomat InPost (14,99 zł) / Kurier DPD</span>
+              </div>
+            </div>
+            <div class="method-item">
+              <div class="method-icon">⚡</div>
+              <div>
+                <strong>Czas odpowiedzi</strong>
+                <span>Zwykle do 2 godzin</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="direct-platforms">
+            <span class="direct-title">Sprawdź moje profile:</span>
+            <div class="platform-btn-row">
+              <a href="#" class="platform-link-btn">Allegro Lokalnie</a>
+              <a href="#" class="platform-link-btn">Vinted</a>
+              <a href="#" class="platform-link-btn">OLX</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form-col">
+          <form id="contactForm" class="site-form">
+            <div class="form-group">
+              <label for="contactName" class="form-label">Twoje imię / nick:</label>
+              <input type="text" id="contactName" required placeholder="np. Tomek" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label for="contactEmail" class="form-label">Adres e-mail lub telefon:</label>
+              <input type="text" id="contactEmail" required placeholder="twoj-email@domena.pl lub nr tel"
+                class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label for="contactSubject" class="form-label">Temat wiadomości:</label>
+              <select id="contactSubject" class="custom-select">
+                <option value="ramka-medal">Personalizowana Ramka na Medal (Trasa + Statystyki)</option>
+                <option value="zakup">Zakup gotowego przedmiotu z katalogu</option>
+                <option value="wycena-wlasny-plik">Wycena własnego pliku / modelu STL</option>
+                <option value="custom">Modyfikacja wymiarów / Projekt na wymiar</option>
+                <option value="inne">Inne zapytanie</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="contactMessage" class="form-label">Treść wiadomości:</label>
+              <textarea id="contactMessage" rows="4" required
+                placeholder="Opisz czego potrzebujesz (np. nazwa biegu, czas, dystans, link do pliku STL, wymiary)..."
+                class="form-textarea"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full btn-lg" id="contactSubmitBtn">
+              <span>Wyślij Wiadomość</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+            <div id="contactFeedback" class="form-feedback" style="display:none;"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <a href="#" class="brand-logo">
+          <span class="brand-name">ADZIOS<span class="accent-orange">WORKS</span></span>
+          <span class="brand-tag">WYDRUKI 3D</span>
+        </a>
+        <p class="footer-tagline">Praktyczny druk 3D, sprytne ułatwienia, personalizowane pamiątki i realizacja zleceń z
+          plików STL.</p>
+      </div>
+
+      <div class="footer-links-group">
+        <div class="footer-col">
+          <h4>Nawigacja</h4>
+          <ul>
+            <li><a href="#projekty">Katalog & Sklep</a></li>
+            <li><a href="#wycena-projektu">Wycena Własnego Pliku</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Gdzie kupić</h4>
+          <ul>
+            <li><a href="https://allegrolokalnie.pl/uzytkownik/Adzios_240" target="_blank" rel="noopener">Allegro Lokalnie</a></li>
+            <li><a href="https://www.vinted.pl/member/271862613" target="_blank" rel="noopener">Profil Vinted</a></li>
+            <li><a href="https://www.olx.pl/oferty/uzytkownik/2Mkzkp/" target="_blank" rel="noopener">Oferty OLX</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Społeczność</h4>
+          <ul>
+            <li><a href="#" target="_blank" rel="noopener">MakerWorld Profile</a></li>
+            <li><a href="#" target="_blank" rel="noopener">Printables</a></li>
+            <li><a href="#" target="_blank" rel="noopener">Instagram / Timelapsy</a></li>
+            <li><a href="#" target="_blank" rel="noopener">TikTok @adzios3d</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 AdziosWorks. Wszelkie prawa zastrzeżone. Praktyczne wydruki 3D & realizacja zleceń.</p>
+        <div class="footer-badges">
+          <span>🚀 Powered by Bambu Lab & FDM Precision</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Quick View / Product Detail Modal -->
+  <div class="modal-overlay" id="productModal" aria-hidden="true">
+    <div class="modal-container" role="dialog" aria-modal="true">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Zamknij okno">&times;</button>
+      <div class="modal-body" id="modalContent">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Wishlist Drawer / Modal -->
+  <div class="modal-overlay" id="wishlistModal" aria-hidden="true">
+    <div class="modal-container wishlist-dialog" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h3>❤️ Twoje Polubione Projekty (<span id="wishlistModalCount">0</span>)</h3>
+        <button class="modal-close-btn" id="wishlistCloseBtn">&times;</button>
+      </div>
+      <div class="wishlist-modal-body" id="wishlistItemsList">
+        <!-- Injected dynamically -->
+      </div>
+      <div class="wishlist-modal-footer">
+        <button class="btn btn-outline" id="clearWishlistBtn">Wyczyść listę</button>
+        <a href="#kontakt" class="btn btn-primary" id="wishlistInquireBtn">Zapytaj o wybrane</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Image Lightbox Modal (Full-Screen Enlargement) -->
+  <div class="lightbox-overlay" id="lightboxModal" aria-hidden="true">
+    <button class="lightbox-close-btn" id="lightboxCloseBtn" aria-label="Zamknij powiększenie">&times;</button>
+    <button class="lightbox-arrow-btn prev" id="lightboxPrevBtn" title="Poprzednie zdjęcie">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M15 18l-6-6 6-6" />
+      </svg>
+    </button>
+    <button class="lightbox-arrow-btn next" id="lightboxNextBtn" title="Następne zdjęcie">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
+    <div class="lightbox-content">
+      <img src="" id="lightboxImg" alt="Powiększenie zdjęcia" class="lightbox-img">
+      <div class="lightbox-caption" id="lightboxCaption">1 / 1</div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+</body>
+
+</html>
