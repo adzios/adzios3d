@@ -1,5 +1,5 @@
 /**
- * ADZIOSWORKS 3D - APPLICATION LOGIC & DATA
+ * ADZIOS3D - APPLICATION LOGIC & DATA
  * Practical 3D Printing Studio & Showcase
  */
 
@@ -340,93 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <circle cx="65" cy="65" r="6" fill="#0F172A" stroke="#FF7A00" stroke-width="1.5"/>
         </svg>
       `
-    },
-    {
-      id: 'car-vent-magsafe-mount',
-      title: 'Wzmacniany Uchwyt do Samochodu na Kratkę (ASA)',
-      category: 'auto',
-      categoryName: 'Samochód',
-      price: 35,
-      badge: 'Odporny na upał ☀️',
-      badgeType: 'cyan',
-      material: 'ASA',
-      materialFull: 'ASA Black (Odporność termiczna do 95°C)',
-      infill: '50% Solid',
-      printTime: '1h 50m',
-      weight: '40 g',
-      dimensions: '65 × 65 × 50 mm',
-      description: 'Wydrukowany ze specjalnego tworzywa ASA, które nie deformuje się w rozgrzanym aucie latem. Metalowy haczyk skręcany pokrętłem zapewnia 100% stabilności.',
-      features: ['Brak deformacji do 95°C', 'Mocowanie kulowe 17mm (standard Garmin/Baseus)', 'Kompatybilny z kratkami pionowymi i poziomymi'],
-      platforms: {
-        allegro: 'https://allegro.pl',
-        vinted: 'https://vinted.pl',
-        olx: 'https://olx.pl'
-      },
-      svgIcon: `
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="45" r="22" fill="#1E293B" stroke="#00F0FF" stroke-width="2"/>
-          <circle cx="50" cy="45" r="10" fill="#FF7A00" fill-opacity="0.4"/>
-          <rect x="44" y="67" width="12" height="20" rx="3" fill="#0F172A" stroke="#FF7A00" stroke-width="2"/>
-        </svg>
-      `
-    },
-    {
-      id: 'self-watering-geometric-planter',
-      title: 'Samonawadniająca Doniczka Geometryczna HexaGrow',
-      category: 'dom',
-      categoryName: 'Dom & Kuchnia',
-      price: 32,
-      badge: 'Eco Smart 🌿',
-      badgeType: 'orange',
-      material: 'PLA',
-      materialFull: 'PLA Pro Silk Grey / Matte Olive',
-      infill: '20% Infill',
-      printTime: '3h 40m',
-      weight: '90 g',
-      dimensions: '105 × 105 × 95 mm',
-      description: 'Dwuścienna doniczka z knotem bawełnianym i wskaźnikiem poziomu wody. Roślina sama pobiera tyle wilgoci, ile potrzebuje – podlewasz raz na 2 tygodnie.',
-      features: ['100% szczelny zbiornik wewnętrzny', 'Nowoczesny design low-poly', 'W zestawie knot z naturalnej bawełny'],
-      platforms: {
-        allegro: 'https://allegro.pl',
-        vinted: 'https://vinted.pl',
-        etsy: 'https://etsy.com'
-      },
-      svgIcon: `
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M25 35L35 80H65L75 35L50 25L25 35Z" fill="#1E293B" stroke="#FF7A00" stroke-width="2"/>
-          <path d="M35 55H65" stroke="#00F0FF" stroke-width="1.5" stroke-dasharray="2 2"/>
-          <circle cx="50" cy="45" r="3" fill="#00F0FF"/>
-        </svg>
-      `
-    },
-    {
-      id: 'tpu-anti-vibration-feet',
-      title: 'Elastyczne Nóżki Antywibracyjne TPU (Zestaw 4szt)',
-      category: 'dom',
-      categoryName: 'Dom & Kuchnia',
-      price: 22,
-      badge: 'Guma TPU 95A',
-      badgeType: 'cyan',
-      material: 'TPU',
-      materialFull: 'TPU 95A Flexible (Tłumiące wibracje)',
-      infill: '15% Gyroid Hollow Dampening',
-      printTime: '1h 30m',
-      weight: '36 g',
-      dimensions: 'Ø 35 mm × 18 mm',
-      description: 'Specjalnie zaprojektowane stopki ze sprężystego elastomeru TPU z komorą powietrzną. Wyciszają pracę drukarek 3D, pralek, kompresorów i głośników audio.',
-      features: ['Redukcja rezonansu do 60%', 'Nie rysują powierzchni', 'Otwór pod śrubę M4 / M5'],
-      platforms: {
-        allegro: 'https://allegro.pl',
-        vinted: 'https://vinted.pl',
-        olx: 'https://olx.pl'
-      },
-      svgIcon: `
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="50" cy="70" rx="30" ry="12" fill="#1E293B" stroke="#00F0FF" stroke-width="2"/>
-          <path d="M20 70C20 45 80 45 80 70" fill="#0F172A" stroke="#FF7A00" stroke-width="2"/>
-          <circle cx="50" cy="55" r="5" fill="#FF7A00"/>
-        </svg>
-      `
     }
   ];
 
@@ -444,7 +357,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const emptyResetBtn = document.getElementById('emptyResetBtn');
   const searchInput = document.getElementById('searchInput');
   const clearSearchBtn = document.getElementById('clearSearchBtn');
-  const materialSelect = document.getElementById('materialSelect');
   const categoryPills = document.getElementById('categoryPills');
   const activeFilterIndicator = document.getElementById('activeFilterIndicator');
   const filterNameText = document.getElementById('filterNameText');
@@ -523,9 +435,43 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Touch swipe support for Lightbox
+  let touchStartX = 0;
+  let touchEndX = 0;
+  if (lightboxModal) {
+    lightboxModal.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    lightboxModal.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const swipeDistance = touchEndX - touchStartX;
+      if (Math.abs(swipeDistance) > 40 && lightboxImages.length > 1) {
+        if (swipeDistance < 0) {
+          lightboxCurrentIdx = (lightboxCurrentIdx + 1) % lightboxImages.length;
+        } else {
+          lightboxCurrentIdx = (lightboxCurrentIdx - 1 + lightboxImages.length) % lightboxImages.length;
+        }
+        updateLightboxView();
+      }
+    }, { passive: true });
+  }
+
+  // Global Keyboard Navigation
   document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (lightboxModal && lightboxModal.classList.contains('open')) {
+        closeLightbox();
+      } else if (productModal && productModal.classList.contains('open')) {
+        closeModal();
+      } else if (wishlistModal && wishlistModal.classList.contains('open')) {
+        closeModal();
+      } else if (mobileDrawer && mobileDrawer.classList.contains('open')) {
+        mobileDrawer.classList.remove('open');
+      }
+    }
+
     if (lightboxModal && lightboxModal.classList.contains('open')) {
-      if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowLeft' && lightboxImages.length > 1) {
         lightboxCurrentIdx = (lightboxCurrentIdx - 1 + lightboxImages.length) % lightboxImages.length;
         updateLightboxView();
@@ -551,16 +497,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const mobileDrawer = document.getElementById('mobileDrawer');
 
-  // Custom File Upload Form Elements
-  const customFileDropzone = document.getElementById('customFileDropzone');
-  const customFileInput = document.getElementById('customFileInput');
-  const dropzonePrompt = document.getElementById('dropzonePrompt');
-  const customFileBadge = document.getElementById('customFileBadge');
-  const customFileNameDisplay = document.getElementById('customFileNameDisplay');
-  const customRemoveFileBtn = document.getElementById('customRemoveFileBtn');
-  const customProjectForm = document.getElementById('customProjectForm');
-  const projectQuoteFeedback = document.getElementById('projectQuoteFeedback');
-
   // Contact Form
   const contactForm = document.getElementById('contactForm');
   const contactSubject = document.getElementById('contactSubject');
@@ -576,7 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (counts[p.category] !== undefined) counts[p.category]++;
     });
 
-    document.getElementById('countAll').textContent = counts.all;
+    if (document.getElementById('countAll')) document.getElementById('countAll').textContent = counts.all;
     if (document.getElementById('countSport')) document.getElementById('countSport').textContent = counts.sport;
     if (document.getElementById('countBiurko')) document.getElementById('countBiurko').textContent = counts.biurko;
     if (document.getElementById('countAuto')) document.getElementById('countAuto').textContent = counts.auto;
@@ -595,6 +531,16 @@ document.addEventListener('DOMContentLoaded', () => {
       );
       return matchCat && matchMat && matchSearch;
     });
+
+    const searchFeedback = document.getElementById('searchResultsFeedback');
+    if (searchFeedback) {
+      if (searchQuery) {
+        searchFeedback.style.display = 'block';
+        searchFeedback.textContent = `🔍 Znaleziono ${filtered.length} ${filtered.length === 1 ? 'projekt' : (filtered.length >= 2 && filtered.length <= 4 ? 'projekty' : 'projektów')} dla frazy "${searchQuery}"`;
+      } else {
+        searchFeedback.style.display = 'none';
+      }
+    }
 
     if (filtered.length === 0) {
       productsGrid.innerHTML = '';
@@ -622,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </button>
         ` : '';
 
-        mediaHtml = `<img src="${imagesList[0]}" alt="${item.title}" class="product-img">${dotsHtml}`;
+        mediaHtml = `<img src="${imagesList[0]}" alt="${item.title}" class="product-img" loading="lazy">${dotsHtml}`;
       } else {
         mediaHtml = item.svgIcon;
       }
@@ -795,14 +741,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
   });
 
-  if (materialSelect) {
-    materialSelect.addEventListener('change', (e) => {
-      currentMaterial = e.target.value;
-      updateFilterIndicators();
-      renderProducts();
-    });
-  }
-
   searchInput.addEventListener('input', (e) => {
     searchQuery = e.target.value.trim().toLowerCase();
     clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
@@ -823,11 +761,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resetAllFilters() {
     currentCategory = 'all';
-    currentMaterial = 'all';
     searchQuery = '';
     searchInput.value = '';
     clearSearchBtn.style.display = 'none';
-    if (materialSelect) materialSelect.value = 'all';
     document.querySelectorAll('.category-btn').forEach(b => {
       b.classList.toggle('active', b.getAttribute('data-category') === 'all');
     });
@@ -835,76 +771,17 @@ document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
   }
 
-  // =========================================================================
-  // 4. CUSTOM FILE UPLOAD & DIRECT QUOTE LOGIC
-  // =========================================================================
-  if (customFileDropzone) {
-    customFileDropzone.addEventListener('click', () => customFileInput.click());
-
-    customFileDropzone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      customFileDropzone.classList.add('dragover');
+  // Handle click on empty state suggestion tags
+  document.querySelectorAll('.empty-tag-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const query = e.currentTarget.getAttribute('data-search');
+      searchInput.value = query;
+      searchQuery = query.toLowerCase();
+      clearSearchBtn.style.display = 'block';
+      updateFilterIndicators();
+      renderProducts();
     });
-
-    customFileDropzone.addEventListener('dragleave', () => customFileDropzone.classList.remove('dragover'));
-
-    customFileDropzone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      customFileDropzone.classList.remove('dragover');
-      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        handleCustomFile(e.dataTransfer.files[0]);
-      }
-    });
-
-    customFileInput.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files.length > 0) {
-        handleCustomFile(e.target.files[0]);
-      }
-    });
-  }
-
-  function handleCustomFile(file) {
-    customFileNameDisplay.textContent = `📁 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-    dropzonePrompt.style.display = 'none';
-    customFileBadge.style.display = 'flex';
-    showToast(`Wczytano plik do wyceny: ${file.name}`);
-  }
-
-  if (customRemoveFileBtn) {
-    customRemoveFileBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      customFileInput.value = '';
-      customFileBadge.style.display = 'none';
-      dropzonePrompt.style.display = 'flex';
-    });
-  }
-
-  if (customProjectForm) {
-    customProjectForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const contact = document.getElementById('projectContact').value.trim();
-      const material = document.getElementById('projectMaterial').value;
-      const color = document.getElementById('projectColor').value;
-      const qty = document.getElementById('projectQty').value;
-      const modelLink = document.getElementById('projectModelLink').value.trim();
-      const notes = document.getElementById('projectNotes').value.trim();
-      const hasFile = customFileInput.files && customFileInput.files.length > 0;
-      const fileName = hasFile ? customFileInput.files[0].name : (modelLink || 'Brak pliku');
-
-      projectQuoteFeedback.style.display = 'block';
-      projectQuoteFeedback.className = 'form-feedback success';
-      projectQuoteFeedback.textContent = `Dziękuję! Twoje zapytanie o wycenę projektu (${fileName}, ${material}, ${color}, ${qty} szt.) zostało wysłane. Skontaktuję się na ${contact} z bezpłatną wyceną w ciągu 2-3 godzin!`;
-
-      showToast('Wysłano zapytanie o wycenę projektu!');
-      customProjectForm.reset();
-      if (customFileBadge) customFileBadge.style.display = 'none';
-      if (dropzonePrompt) dropzonePrompt.style.display = 'flex';
-
-      setTimeout(() => {
-        projectQuoteFeedback.style.display = 'none';
-      }, 9000);
-    });
-  }
+  });
 
   // =========================================================================
   // 5. PRODUCT DETAIL MODAL (QUICK VIEW & BUY LINKS)
@@ -1010,24 +887,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="modal-tech-specs">
             <div class="tech-spec-row">
-              <span>Materiał i wykończenie:</span>
+              <span>🧶 Materiał i wykończenie:</span>
               <strong>${item.materialFull}</strong>
             </div>
             <div class="tech-spec-row">
-              <span>Gęstość wypełnienia:</span>
-              <strong>${item.infill}</strong>
-            </div>
-            <div class="tech-spec-row">
-              <span>Wymiary zewnętrzne:</span>
+              <span>📐 Wymiary zewnętrzne:</span>
               <strong>${item.dimensions}</strong>
             </div>
             <div class="tech-spec-row">
-              <span>Waga elementu:</span>
+              <span>⏱️ Czas druku:</span>
+              <strong>${item.printTime}</strong>
+            </div>
+            <div class="tech-spec-row">
+              <span>⚖️ Waga elementu:</span>
               <strong>${item.weight}</strong>
             </div>
             <div class="tech-spec-row">
-              <span>Czas druku:</span>
-              <strong>${item.printTime}</strong>
+              <span>🧩 Gęstość wypełnienia:</span>
+              <strong>${item.infill}</strong>
             </div>
           </div>
         </div>
@@ -1087,10 +964,10 @@ document.addEventListener('DOMContentLoaded', () => {
       directBtn.addEventListener('click', () => {
         closeModal();
         if (item.id === 'medal-shadowbox-runner') {
-          contactSubject.value = 'ramka-medal';
+          contactSubject.value = 'Personalizowana ramka na medal (trasa i statystyki)';
           contactMessage.value = `Dzień dobry, chciałbym zamówić personalizowaną ramkę na medal 3D:\n• Nazwa biegu / zawodów: (np. 5K Garmin Gdańsk 2025)\n• Dystans: (np. 5.00 km)\n• Średnie tempo: (np. 3:42/km)\n• Czas końcowy: (np. 18:32)\n• Kolorystyka: Złoty Silk Gold + Czarny mat\nProszę o informację o realizacji i wysyłce Paczkomatem.`;
         } else {
-          contactSubject.value = 'zakup';
+          contactSubject.value = 'Zakup produktu z katalogu';
           contactMessage.value = `Dzień dobry, chciałbym zamówić bezpośrednio przedmiot: "${item.title}" (${item.price} PLN). Proszę o informację o dostępnych kolorach i dane do wysyłki Paczkomatem.`;
         }
         const contactSec = document.getElementById('kontakt');
@@ -1198,7 +1075,7 @@ document.addEventListener('DOMContentLoaded', () => {
   wishlistInquireBtn.addEventListener('click', () => {
     closeModal();
     const favTitles = products.filter(p => wishlist.includes(p.id)).map(p => `• ${p.title} (${p.price} PLN)`).join('\n');
-    contactSubject.value = 'zakup';
+    contactSubject.value = 'Zakup produktu z katalogu';
     contactMessage.value = `Dzień dobry, interesuje mnie zakup następujących wydruków z mojej listy ulubionych:\n${favTitles}\n\nProszę o informację o dostępności i łączną wycenę z wysyłką.`;
     const contactSec = document.getElementById('kontakt');
     if (contactSec) contactSec.scrollIntoView({ behavior: 'smooth' });
@@ -1232,30 +1109,70 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // 9. CONTACT FORM SUBMISSION
+  // 9. CONTACT FORM SUBMISSION (HYBRID ULTRA-RELIABLE DELIVERY TO ADZIOS3D@GMAIL.COM)
   // =========================================================================
-  contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('contactName').value.trim();
-    const email = document.getElementById('contactEmail').value.trim();
-    const message = contactMessage.value.trim();
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('contactName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const subjectSelect = document.getElementById('contactSubject');
+      const subjectVal = subjectSelect ? subjectSelect.value : '';
+      const subjectText = (subjectSelect && subjectSelect.selectedIndex >= 0) ? subjectSelect.options[subjectSelect.selectedIndex].text : 'Zapytanie';
+      const message = contactMessage.value.trim();
 
-    if (!name || !email || !message) {
-      alert('Proszę wypełnić wszystkie wymagane pola formularza.');
-      return;
-    }
+      if (!subjectVal) {
+        showToast('⚠️ Proszę wybrać temat wiadomości z listy.');
+        alert('Proszę wybrać temat wiadomości z listy.');
+        subjectSelect.focus();
+        return;
+      }
 
-    contactFeedback.style.display = 'block';
-    contactFeedback.className = 'form-feedback success';
-    contactFeedback.textContent = `Dziękuję ${name}! Twoja wiadomość została wysłana. Odpowiem na ${email} najszybciej jak to możliwe (zwykle do 2 godzin).`;
+      if (!name || !email || !message) {
+        alert('Proszę wypełnić wszystkie wymagane pola formularza.');
+        return;
+      }
 
-    showToast('Wiadomość wysłana pomyślnie! Dziękuję za kontakt.');
-    contactForm.reset();
+      // Prepare mailto pre-filled link
+      const mailSubject = `📥 Zapytanie z Adzios3D: ${subjectText} od ${name}`;
+      const mailBody = `Dzień dobry,\n\nOto moje zapytanie ze strony Adzios3D:\n\n• Imię / Nick: ${name}\n• Kontakt (E-mail / Tel): ${email}\n• Temat: ${subjectText}\n\nTreść wiadomości:\n${message}\n\n---\nWysłano z formularza Adzios3D`;
 
-    setTimeout(() => {
-      contactFeedback.style.display = 'none';
-    }, 8000);
-  });
+      const mailtoUrl = `mailto:adzios3d@gmail.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+
+      // 1. Open user's email client / Gmail directly with pre-filled content
+      window.location.href = mailtoUrl;
+
+      // 2. Try background API fetch as secondary route
+      try {
+        const formData = new FormData();
+        formData.append('Imię', name);
+        formData.append('Kontakt', email);
+        formData.append('Temat', subjectText);
+        formData.append('Wiadomość', message);
+        formData.append('_subject', mailSubject);
+
+        fetch('https://formsubmit.co/ajax/adzios3d@gmail.com', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: formData
+        }).catch(() => {});
+      } catch (err) {}
+
+      // 3. Display UI feedback
+      if (contactFeedback) {
+        contactFeedback.style.display = 'block';
+        contactFeedback.className = 'form-feedback success';
+        contactFeedback.textContent = `Dziękuję ${name}! Przygotowano wiadomość do adzios3d@gmail.com. Otwarto Twój program pocztowy / Gmail z gotową treścią – kliknij Wyślij w swoim programie pocztowym!`;
+      }
+
+      showToast('🚀 Otwarto program pocztowy z przygotowaną treścią!');
+      contactForm.reset();
+
+      setTimeout(() => {
+        if (contactFeedback) contactFeedback.style.display = 'none';
+      }, 12000);
+    });
+  }
 
   // =========================================================================
   // 10. TOAST NOTIFICATION SYSTEM
@@ -1334,7 +1251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateActiveNav() {
       const scrollPos = window.scrollY || window.pageYOffset;
-      const headerOffset = 140;
+      const headerOffset = 90;
 
       let currentSectionId = '';
 
@@ -1345,6 +1262,11 @@ document.addEventListener('DOMContentLoaded', () => {
           currentSectionId = section.getAttribute('id');
         }
       });
+
+      // Special case: if scrolled near the bottom of page, highlight contact
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 60) {
+        currentSectionId = 'kontakt';
+      }
 
       navLinks.forEach(link => {
         const href = link.getAttribute('href');
