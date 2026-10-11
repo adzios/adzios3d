@@ -80,11 +80,11 @@ All views must be verified without horizontal layout shifts, clipping, or horizo
    - Opens on card click with smooth fade-in/slide-up.
    - Specs table displays clean single-line labels: `🧶 Materiał:` and `📐 Wymiary:`.
    - Gallery images and thumbnail switcher work smoothly.
-   - Direct purchase buttons (Allegro, Vinted, OLX, Zamów bezpośrednio) trigger proper actions.
+   - Direct purchase buttons (Allegro, OLX, Zamów bezpośrednio) trigger proper actions.
    - Closes reliably via `&times;` button, outside click, or `Escape` key.
 4. **FAQ Accordion**:
    - Expanding an FAQ item closes others (accordion behavior).
-   - Links in FAQ answers (email `mailto:`, Allegro, Vinted, OLX) open correctly in new tabs without breaking layout.
+   - Links in FAQ answers (email `mailto:`, Allegro, OLX) open correctly in new tabs without breaking layout.
 5. **Contact Form**:
    - Fields validate required inputs.
    - Email highlight link `adzios3d@gmail.com` launches default mail client cleanly.
