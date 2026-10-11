@@ -506,17 +506,78 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   // 3. RENDER PRODUCTS & FILTERS
   // =========================================================================
-  function updateCategoryCounts() {
-    const counts = { all: products.length, sport: 0, biurko: 0, auto: 0, dom: 0 };
+  // Known category configuration with default icons and names
+  const categoryConfig = {
+    sport: { name: 'Medale & Pamiątki', icon: '🏆' },
+    biurko: { name: 'Biurko', icon: '🖥️' },
+    auto: { name: 'Samochód', icon: '🚗' },
+    dom: { name: 'Dom & Kuchnia', icon: '🏠' }
+  };
+
+  function renderCategoryPills() {
+    if (!categoryPills) return;
+
+    // Dynamically calculate counts for all categories from products array
+    const counts = { all: products.length };
     products.forEach(p => {
-      if (counts[p.category] !== undefined) counts[p.category]++;
+      if (p.category) {
+        counts[p.category] = (counts[p.category] || 0) + 1;
+      }
     });
 
-    if (document.getElementById('countAll')) document.getElementById('countAll').textContent = counts.all;
-    if (document.getElementById('countSport')) document.getElementById('countSport').textContent = counts.sport;
-    if (document.getElementById('countBiurko')) document.getElementById('countBiurko').textContent = counts.biurko;
-    if (document.getElementById('countAuto')) document.getElementById('countAuto').textContent = counts.auto;
-    if (document.getElementById('countDom')) document.getElementById('countDom').textContent = counts.dom;
+    // If active category has no products, fall back to 'all'
+    if (currentCategory !== 'all' && (!counts[currentCategory] || counts[currentCategory] === 0)) {
+      currentCategory = 'all';
+    }
+
+    // Always start with 'Wszystkie'
+    let html = `
+      <button class="category-btn ${currentCategory === 'all' ? 'active' : ''}" data-category="all">
+        <span>Wszystkie</span>
+        <span class="cat-count" id="countAll">${counts.all}</span>
+      </button>
+    `;
+
+    // Only include categories that actually have at least 1 product (count > 0)
+    const activeCategories = [];
+
+    // Order from categoryConfig first
+    Object.keys(categoryConfig).forEach(catKey => {
+      if ((counts[catKey] || 0) > 0) {
+        activeCategories.push(catKey);
+      }
+    });
+
+    // Any other categories present in products not in categoryConfig
+    products.forEach(p => {
+      if (p.category && !activeCategories.includes(p.category) && (counts[p.category] || 0) > 0) {
+        activeCategories.push(p.category);
+      }
+    });
+
+    // Render only the active non-empty categories
+    activeCategories.forEach(catKey => {
+      const conf = categoryConfig[catKey] || {
+        name: products.find(p => p.category === catKey)?.categoryName || catKey,
+        icon: '📦'
+      };
+      const count = counts[catKey] || 0;
+      const isActive = currentCategory === catKey;
+
+      html += `
+        <button class="category-btn ${isActive ? 'active' : ''}" data-category="${catKey}">
+          <span>${conf.icon} ${conf.name}</span>
+          <span class="cat-count">${count}</span>
+        </button>
+      `;
+    });
+
+    categoryPills.innerHTML = html;
+  }
+
+  // Alias for backward compatibility
+  function updateCategoryCounts() {
+    renderCategoryPills();
   }
 
   function renderProducts() {
@@ -721,7 +782,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hasFilter) {
       activeFilterIndicator.style.display = 'flex';
       let text = [];
-      if (currentCategory !== 'all') text.push(`Kategoria: ${currentCategory}`);
+      if (currentCategory !== 'all') {
+        const catLabel = categoryConfig[currentCategory]?.name || currentCategory;
+        text.push(`Kategoria: ${catLabel}`);
+      }
       if (currentMaterial !== 'all') text.push(`Materiał: ${currentMaterial}`);
       if (searchQuery) text.push(`Szukasz: "${searchQuery}"`);
       filterNameText.textContent = text.join(' • ');
@@ -887,24 +951,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="modal-tech-specs">
             <div class="tech-spec-row">
-              <span>🧶 Materiał i wykończenie:</span>
+              <span>🧶 Materiał:</span>
               <strong>${item.materialFull}</strong>
             </div>
             <div class="tech-spec-row">
-              <span>📐 Wymiary zewnętrzne:</span>
+              <span>📐 Wymiary:</span>
               <strong>${item.dimensions}</strong>
-            </div>
-            <div class="tech-spec-row">
-              <span>⏱️ Czas druku:</span>
-              <strong>${item.printTime}</strong>
-            </div>
-            <div class="tech-spec-row">
-              <span>⚖️ Waga elementu:</span>
-              <strong>${item.weight}</strong>
-            </div>
-            <div class="tech-spec-row">
-              <span>🧩 Gęstość wypełnienia:</span>
-              <strong>${item.infill}</strong>
             </div>
           </div>
         </div>

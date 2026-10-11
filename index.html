@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Adzios3D | Wydruki 3D & Praktyczne Projekty na Co Dzień</title>
   <meta name="description"
     content="Adzios3D – Wydruki 3D, personalizowane ramki na medale, funkcjonalne gadżety oraz wycena i druk z własnych plików STL / STEP.">
@@ -16,7 +16,7 @@
     rel="stylesheet">
 
   <!-- CSS Styles -->
-  <link rel="stylesheet" href="style.css?v=2.6">
+  <link rel="stylesheet" href="style.css?v=2.8">
 </head>
 
 <body>
@@ -174,28 +174,9 @@
       </div>
       <div class="search-results-feedback" id="searchResultsFeedback" style="display:none;"></div>
 
-      <!-- Category Filter Pills -->
+      <!-- Category Filter Pills (Rendered dynamically via app.js) -->
       <div class="category-pills" id="categoryPills">
-        <button class="category-btn active" data-category="all">
-          <span>Wszystkie</span>
-          <span class="cat-count" id="countAll">0</span>
-        </button>
-        <button class="category-btn" data-category="sport">
-          <span>🏆 Medale & Pamiątki</span>
-          <span class="cat-count" id="countSport">0</span>
-        </button>
-        <button class="category-btn" data-category="biurko">
-          <span>🖥️ Biurko</span>
-          <span class="cat-count" id="countBiurko">0</span>
-        </button>
-        <button class="category-btn" data-category="auto">
-          <span>🚗 Samochód</span>
-          <span class="cat-count" id="countAuto">0</span>
-        </button>
-        <button class="category-btn" data-category="dom">
-          <span>🏠 Dom & Kuchnia</span>
-          <span class="cat-count" id="countDom">0</span>
-        </button>
+        <!-- Injected dynamically via JavaScript -->
       </div>
 
       <!-- Active Filters Display -->
@@ -324,7 +305,7 @@
             <div class="method-item">
               <div class="method-icon">📦</div>
               <div>
-                <strong>Wysyłka</strong>
+                <strong>Szybka wysyłka</strong>
                 <span>InPost</span>
               </div>
             </div>
@@ -543,7 +524,7 @@
   </div>
 
   <!-- JavaScript -->
-  <script src="app.js?v=2.2"></script>
+  <script src="app.js?v=2.5"></script>
 </body>
 
 </html>
