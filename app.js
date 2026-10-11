@@ -1052,35 +1052,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (wishlist.length === 0) {
       wishlistItemsList.innerHTML = `
-        <div style="text-align: center; padding: 30px; color: var(--text-secondary);">
-          <p>Nie masz jeszcze żadnych polubionych projektów.</p>
-          <small>Kliknij serduszko na karcie projektu, aby dodać go tutaj!</small>
+        <div class="wishlist-empty-state">
+          <div class="wishlist-empty-icon">🤍</div>
+          <h4>Twoja lista jest pusta</h4>
+          <p>Kliknij serduszko na karcie projektu, aby dodać go do listy ulubionych!</p>
         </div>
       `;
+      if (clearWishlistBtn) clearWishlistBtn.style.display = 'none';
+      if (wishlistInquireBtn) wishlistInquireBtn.style.display = 'none';
     } else {
+      if (clearWishlistBtn) clearWishlistBtn.style.display = '';
+      if (wishlistInquireBtn) wishlistInquireBtn.style.display = '';
       const favItems = products.filter(p => wishlist.includes(p.id));
       wishlistItemsList.innerHTML = favItems.map(p => {
         const thumb = p.imageSrc
-          ? `<img src="${p.imageSrc}" style="width: 36px; height: 36px; object-fit: cover; border-radius: 4px;">`
-          : `<div style="width: 36px; height: 36px;">${p.svgIcon}</div>`;
+          ? `<div class="wishlist-thumb"><img src="${p.imageSrc}" alt="${p.title}" loading="lazy"></div>`
+          : `<div class="wishlist-thumb">${p.svgIcon}</div>`;
         return `
-          <div class="wishlist-item">
-            <div class="wishlist-item-info">
+          <div class="wishlist-item" data-id="${p.id}">
+            <div class="wishlist-item-info" role="button" tabindex="0" title="Kliknij, aby zobaczyć szczegóły">
               ${thumb}
-              <div>
-                <strong>${p.title}</strong>
-                <span>${p.price} PLN • ${p.material}</span>
+              <div class="wishlist-item-text">
+                <strong class="wishlist-item-title">${p.title}</strong>
+                <div class="wishlist-item-meta">
+                  <span class="wishlist-item-price">${p.price} PLN</span>
+                  <span class="wishlist-item-badge">${p.material}</span>
+                </div>
               </div>
             </div>
-            <button class="remove-wish-btn" data-remove-id="${p.id}" title="Usuń">&times;</button>
+            <button class="remove-wish-btn" data-remove-id="${p.id}" title="Usuń z polubionych" aria-label="Usuń ${p.title} z polubionych">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
           </div>
         `;
       }).join('');
 
       document.querySelectorAll('[data-remove-id]').forEach(btn => {
         btn.addEventListener('click', (e) => {
+          e.stopPropagation();
           const id = e.currentTarget.getAttribute('data-remove-id');
           toggleWishlist(id);
+        });
+      });
+
+      document.querySelectorAll('.wishlist-item-info').forEach(info => {
+        const handleOpen = (e) => {
+          const itemEl = e.currentTarget.closest('.wishlist-item');
+          if (itemEl) {
+            const id = itemEl.getAttribute('data-id');
+            closeModal();
+            setTimeout(() => {
+              openProductModal(id);
+            }, 120);
+          }
+        };
+        info.addEventListener('click', handleOpen);
+        info.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleOpen(e);
+          }
         });
       });
     }
