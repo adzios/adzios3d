@@ -2024,6 +2024,10 @@ svg {
   gap: 12px;
 }
 
+.footer-subtext {
+  display: inline;
+}
+
 /* ==========================================================================
    MODALS (PRODUCT DETAILS & WISHLIST)
    ========================================================================== */
@@ -3274,6 +3278,11 @@ svg {
     text-align: center;
     gap: 8px;
     padding-top: 6px;
+  }
+
+  .footer-subtext {
+    display: block;
+    margin-top: 4px;
   }
 }
 
