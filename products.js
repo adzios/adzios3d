@@ -18,7 +18,7 @@ const products = [
     printTime: '6h 15m',
     weight: '180 g',
     dimensions: '230 × 170 × 45 mm',
-    imageSrc: 'assets/ramka-medal-bieg.jpg',
+    imageSrc: 'assets/ramka-medal-bieg.webp',
     description: 'Głęboka ramka ekspozycyjna (shadowbox) na medal z zawodów biegowych, maratonu, triathlonu lub kolarstwa. Zawiera przestrzenną trasę 3D z realnym profilem wysokościowym ze złotego filamentu Silk Gold, wypukły napis imprezy oraz personalizowaną tabliczkę z Twoim wynikiem (Dystans, Tempo, Czas).',
     features: [
       'Trójwymiarowy profil trasy ze złotego filamentu Silk Gold',
@@ -54,7 +54,7 @@ const products = [
     printTime: '2h 50m',
     weight: '75 g',
     dimensions: '80 × 75 × 220 mm',
-    imageSrc: 'assets/stojak-na-medale.jpg',
+    imageSrc: 'assets/stojak-na-medale.webp',
     description: 'Elegancki wolnostojący stojak ekspozycyjny na medale z zawodów biegowych, maratonów czy triathlonu. Innowacyjna konstrukcja pozwala nawinąć wstążkę wokół pionowej kolumny i stabilnie zaprezentować medal na biurku lub półce bez konieczności wiercenia dziur.',
     features: [
       'Wyprofilowana kolumna do estetycznego nawinięcia wstążki medalu',
@@ -90,7 +90,7 @@ const products = [
     printTime: '3h 15m',
     weight: '95 g',
     dimensions: 'Wysokość 40 mm (idealne dopasowanie)',
-    imageSrc: 'assets/polka-fiat-tipo.jpg',
+    imageSrc: 'assets/polka-fiat-tipo.webp',
     description: 'Modułowa półka podłokietnika dedykowana do samochodu Fiat Tipo. Wykonana metodą druku 3D z trwałego filamentu PET-G odpornego na wysokie temperatury panujące w pojeździe latem (aż do 85°C). Przemyślana wysokość 4 cm pozwala wygodnie podzielić schowek i uporządkować monety, klucze i dokumenty.',
     features: [
       'Dedykowane wyprofilowanie idealnie dopasowane do schowka Fiata Tipo',
@@ -124,7 +124,7 @@ const products = [
     printTime: '3h 30m',
     weight: '110 g',
     dimensions: 'Wysokość 40 mm (idealne dopasowanie)',
-    imageSrc: 'assets/polka-fiat-tipo-wykladzina.png',
+    imageSrc: 'assets/polka-fiat-tipo-wykladzina.webp',
     description: 'Wersja Premium półki podłokietnika do Fiata Tipo wyłożona miękką wkładką antypoślizgową z gumy TPU lub naturalnego korka. Wykończenie eliminuje nieprzyjemne stukanie monet, kluczy i pendrive\'ów podczas jazdy oraz zapobiega ich przesuwaniu na zakrętach.',
     features: [
       'Wyściółka do wyboru: antypoślizgowa guma TPU lub naturalny korek',
@@ -158,7 +158,7 @@ const products = [
     printTime: '3h 25m',
     weight: '105 g',
     dimensions: 'Wysokość 40 mm (dedykowane gniazda PLN)',
-    imageSrc: 'assets/polka-fiat-tipo-monety.jpg',
+    imageSrc: 'assets/polka-fiat-tipo-monety.webp',
     description: 'Wersja półki podłokietnika do Fiata Tipo wyposażona w dedykowany organizer na bilon (specjalne wyprofilowane gniazda na monety 1zł, 2zł i 5zł). Zapewnia natychmiastowy dostęp do drobnych na parkingach, myjniach i bramkach autostradowych, eliminując bałagan i stukanie monet w aucie.',
     features: [
       'Wyprofilowane gniazda na monety 1 PLN, 2 PLN oraz 5 PLN',
@@ -193,7 +193,7 @@ const products = [
     printTime: '1h 45m',
     weight: '35 g',
     dimensions: '110 × 65 × 18 mm',
-    imageSrc: 'assets/stojak-bobr-wunderbaum.jpg',
+    imageSrc: 'assets/stojak-bobr-wunderbaum.webp',
     description: 'Kultowy dedykowany uchwyt samochodowy na zapachową choinkę Wunder-Baum montowany nad ekranem kokpitu. Posiada charakterystyczny trójwymiarowy wycięty napis "BÓBR KURWA" oraz sylwetkę bobra. Wydrukowany z trwałego PET-G, który nie ulega deformacji w rozgrzanym słońcem aucie.',
     features: [
       'Wycięty trójwymiarowy napis "BÓBR KURWA" oraz sylwetka bobra',
@@ -226,10 +226,10 @@ const products = [
     printTime: '2h 40m',
     weight: '120 g',
     dimensions: '85 × 85 × 210 mm',
-    imageSrc: 'assets/jagermeister-stand-1.jpg',
+    imageSrc: 'assets/jagermeister-stand-1.webp',
     images: [
-      'assets/jagermeister-stand-1.jpg',
-      'assets/jagermeister-stand-2.jpg'
+      'assets/jagermeister-stand-1.webp',
+      'assets/jagermeister-stand-2.webp'
     ],
     description: 'Zestaw 4 oryginalnych kieliszków w formie laboratoryjnych probówek z logo Jägermeister, umieszczonych w stylowym, czarnym stojaku. Front podstawki zdobi trójwymiarowe złote logo z kultowym motywem jelenia. Drukowany 3D jest tylko stojak z odpornego PET-G, probówki są w 100% oryginalne firmy Jägermeister.',
     features: [
@@ -266,10 +266,10 @@ const products = [
     printTime: '1h 15m',
     weight: '30 g (zestaw)',
     dimensions: 'Standard Ø 26-28 mm (pasuje na szklane butelki)',
-    imageSrc: 'assets/kapsle-butelka-1.jpg',
+    imageSrc: 'assets/kapsle-butelka-1.webp',
     images: [
-      'assets/kapsle-butelka-1.jpg',
-      'assets/kapsle-butelka-2.jpg'
+      'assets/kapsle-butelka-1.webp',
+      'assets/kapsle-butelka-2.webp'
     ],
     description: 'Zestaw 5 wielorazowych kapsli i zatyczek na butelki wykonanych w technologii druku 3D. To idealny, praktyczny gadżet na grilla, ognisko, imprezę w plenerze czy relaks w ogrodzie. Pasują idealnie na standardowe szklane butelki, chroniąc napój przed owadami (osami, pszczołami), kurzem oraz utratą nagazowania.',
     features: [
@@ -303,10 +303,10 @@ const products = [
     printTime: '1h 20m',
     weight: '25 g',
     dimensions: '90 × 42 × 30 mm (dla resoraków 1:64)',
-    imageSrc: 'assets/wieszak-resoraki-1.jpg',
+    imageSrc: 'assets/wieszak-resoraki-1.webp',
     images: [
-      'assets/wieszak-resoraki-1.jpg',
-      'assets/wieszak-resoraki-2.jpg'
+      'assets/wieszak-resoraki-1.webp',
+      'assets/wieszak-resoraki-2.webp'
     ],
     description: 'Minimalistyczny wieszak i półka ścienna 3D dedykowana do efektownego wyeksponowania kolekcji autek resoraków w skali 1:64 (Hot Wheels, Matchbox, Majorette). Posiada specjalnie wyprofilowany podgięty rant zapobiegający staczaniu się autka oraz wycięty otwór montażowy na wkręt lub taśmę piankową.',
     features: [

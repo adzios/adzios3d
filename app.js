@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     emptyState.style.display = 'none';
-    productsGrid.innerHTML = filtered.map(item => {
+    productsGrid.innerHTML = filtered.map((item, itemIdx) => {
       const isFav = wishlist.includes(item.id);
       const hasMultipleImages = item.images && item.images.length > 1;
       const imagesList = hasMultipleImages ? item.images : (item.imageSrc ? [item.imageSrc] : []);
@@ -295,7 +295,10 @@ document.addEventListener('DOMContentLoaded', () => {
           </button>
         ` : '';
 
-        mediaHtml = `<img src="${imagesList[0]}" alt="${item.title}" class="product-img" loading="lazy" decoding="async">${dotsHtml}`;
+        // Prioritize first 2 above-the-fold cards (eager + high priority) to maximize LCP speed
+        const isAboveFold = itemIdx < 2;
+        const loadingAttr = isAboveFold ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
+        mediaHtml = `<img src="${imagesList[0]}" alt="${item.title}" class="product-img" ${loadingAttr} decoding="async">${dotsHtml}`;
       } else {
         mediaHtml = item.svgIcon;
       }
