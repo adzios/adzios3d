@@ -458,7 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (wishlistModal && wishlistModal.classList.contains('open')) {
         closeModal();
       } else if (mobileDrawer && mobileDrawer.classList.contains('open')) {
-        mobileDrawer.classList.remove('open');
+        setMobileDrawer(false);
       }
     }
 
@@ -1135,15 +1135,48 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // 8. MOBILE MENU TOGGLE
+  // 8. MOBILE MENU TOGGLE WITH BACKGROUND SCROLL-LOCK
   // =========================================================================
-  mobileMenuBtn.addEventListener('click', () => {
-    mobileDrawer.classList.toggle('open');
-  });
-
-  document.querySelectorAll('.mobile-nav-link').forEach(link => {
-    link.addEventListener('click', () => {
+  function setMobileDrawer(isOpen) {
+    if (!mobileDrawer) return;
+    if (isOpen) {
+      mobileDrawer.classList.add('open');
+      document.body.classList.add('menu-open');
+      document.documentElement.classList.add('menu-open');
+      document.body.style.overflow = 'hidden';
+      if (mobileMenuBtn) {
+        mobileMenuBtn.classList.add('active');
+        mobileMenuBtn.setAttribute('aria-expanded', 'true');
+      }
+    } else {
       mobileDrawer.classList.remove('open');
+      document.body.classList.remove('menu-open');
+      document.documentElement.classList.remove('menu-open');
+      document.body.style.overflow = '';
+      if (mobileMenuBtn) {
+        mobileMenuBtn.classList.remove('active');
+        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      }
+    }
+  }
+
+  if (mobileMenuBtn && mobileDrawer) {
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = mobileDrawer.classList.contains('open');
+      setMobileDrawer(!isOpen);
+    });
+
+    // Prevent background scrolling on iOS when dragging inside drawer
+    mobileDrawer.addEventListener('touchmove', (e) => {
+      if (mobileDrawer.scrollHeight <= mobileDrawer.clientHeight) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  }
+
+  document.querySelectorAll('.mobile-nav-link, .mobile-platform-card').forEach(link => {
+    link.addEventListener('click', () => {
+      setMobileDrawer(false);
     });
   });
 
