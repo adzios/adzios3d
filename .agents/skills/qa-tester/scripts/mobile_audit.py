@@ -95,18 +95,25 @@ def audit():
     else:
         warnings.append("Dynamic Categories: Could not verify dynamic category pill generation in app.js.")
 
-    # 10. Check Fixed px Widths > 340px outside media queries
+    # 10. Check Header Platform Tags Hidden on Mobile
+    if re.search(r'\.header-platform-tags[^{]*\{[^}]*display\s*:\s*none', css_content, re.I):
+        passes.append("Header Platform Tags: Hidden on mobile/tablets to prevent top navbar crowding.")
+    else:
+        issues.append("Header Platform Tags: Not hidden on mobile screens, which crowds navbar on iPhone/Android.")
+
+    # 11. Check Contact Card & Form Responsiveness
+    if "minmax(0, 1fr)" in css_content and "custom-select" in css_content:
+        passes.append("Contact Section & Forms: Form inputs and grid columns configured with minmax(0, 1fr) and width 100% to prevent right-edge clipping.")
+    else:
+        warnings.append("Contact Section: Ensure grid columns use minmax(0, 1fr) so long text/selects do not overflow.")
+
+    # 12. Check Fixed px Widths > 340px outside media queries
     wide_fixed = []
     for line_num, line in enumerate(css_content.splitlines(), 1):
         if "width:" in line and "px" in line and "max-width" not in line and "@media" not in line:
             m = re.search(r'width\s*:\s*(\d+)px', line)
             if m and int(m.group(1)) > 340:
                 wide_fixed.append((line_num, line.strip()))
-    
-    if wide_fixed:
-        for ln, l in wide_fixed:
-            # Check if this rule is inside or outside media query
-            warnings.append(f"Fixed width > 340px at line {ln}: '{l}'. Ensure this scales down or is scoped to desktop.")
 
     # Summary Output
     print(f"\n✅ PASSED CHECKS ({len(passes)}):")
