@@ -951,6 +951,8 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     productModal.classList.add('open');
+    document.body.classList.add('modal-open');
+    document.documentElement.classList.add('modal-open');
     document.body.style.overflow = 'hidden';
     history.replaceState(null, '', '#produkt=' + id);
 
@@ -1019,6 +1021,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function closeModal() {
     productModal.classList.remove('open');
     wishlistModal.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    document.documentElement.classList.remove('modal-open');
     document.body.style.overflow = '';
     if (window.location.hash.includes('produkt=')) {
       history.replaceState(null, '', window.location.pathname + window.location.search);
@@ -1097,6 +1101,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   wishlistToggleBtn.addEventListener('click', () => {
     wishlistModal.classList.add('open');
+    document.body.classList.add('modal-open');
+    document.documentElement.classList.add('modal-open');
     document.body.style.overflow = 'hidden';
   });
 
@@ -1104,6 +1110,19 @@ document.addEventListener('DOMContentLoaded', () => {
   wishlistModal.addEventListener('click', (e) => {
     if (e.target === wishlistModal) closeModal();
   });
+
+  // Prevent background scrolling on iOS when dragging on modal backdrop
+  productModal.addEventListener('touchmove', (e) => {
+    if (e.target === productModal) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  wishlistModal.addEventListener('touchmove', (e) => {
+    if (e.target === wishlistModal) {
+      e.preventDefault();
+    }
+  }, { passive: false });
 
   clearWishlistBtn.addEventListener('click', () => {
     wishlist = [];
