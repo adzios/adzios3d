@@ -796,11 +796,23 @@ document.addEventListener('DOMContentLoaded', () => {
     renderProducts();
   });
 
+  function debounce(fn, delay = 160) {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => fn(...args), delay);
+    };
+  }
+
+  const debouncedRenderProducts = debounce(() => {
+    renderProducts();
+  }, 160);
+
   searchInput.addEventListener('input', (e) => {
     searchQuery = e.target.value.trim().toLowerCase();
     clearSearchBtn.style.display = searchQuery ? 'block' : 'none';
     updateFilterIndicators();
-    renderProducts();
+    debouncedRenderProducts();
   });
 
   clearSearchBtn.addEventListener('click', () => {
@@ -887,6 +899,13 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     ` : '';
 
+    const allegroUrl = (item.platforms && item.platforms.allegro && item.platforms.allegro !== 'https://allegro.pl')
+      ? item.platforms.allegro
+      : 'https://allegrolokalnie.pl/uzytkownik/Adzios_240';
+    const olxUrl = (item.platforms && item.platforms.olx && item.platforms.olx !== 'https://olx.pl')
+      ? item.platforms.olx
+      : 'https://www.olx.pl/oferty/uzytkownik/2Mkzkp/';
+
     modalContent.innerHTML = `
       <div class="modal-grid">
         <div class="modal-media-col">
@@ -919,11 +938,11 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="modal-buy-section" style="margin-bottom: 24px;">
             <h4>Wybierz platformę zakupu:</h4>
             <div class="buy-platform-grid">
-              <a href="${item.platforms.allegro || '#'}" target="_blank" rel="noopener" class="platform-buy-btn allegro">
+              <a href="${allegroUrl}" target="_blank" rel="noopener noreferrer" class="platform-buy-btn allegro">
                 <span>Kup na Allegro Lokalnie</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
               </a>
-              <a href="${item.platforms.olx || '#'}" target="_blank" rel="noopener" class="platform-buy-btn olx">
+              <a href="${olxUrl}" target="_blank" rel="noopener noreferrer" class="platform-buy-btn olx">
                 <span>Kup na OLX</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
               </a>
