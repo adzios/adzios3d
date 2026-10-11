@@ -1134,6 +1134,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   wishlistToggleBtn.addEventListener('click', () => {
+    if (mobileDrawer && mobileDrawer.classList.contains('open')) {
+      setMobileDrawer(false);
+    }
     wishlistModal.classList.add('open');
     document.body.classList.add('modal-open');
     document.documentElement.classList.add('modal-open');
@@ -1230,6 +1233,18 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.mobile-nav-link, .mobile-platform-card').forEach(link => {
     link.addEventListener('click', () => {
       setMobileDrawer(false);
+    });
+  });
+
+  // Close mobile drawer & smoothly scroll to top when clicking logo / title
+  document.querySelectorAll('.brand-logo').forEach(logo => {
+    logo.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (mobileDrawer && mobileDrawer.classList.contains('open')) {
+        setMobileDrawer(false);
+      }
+      closeModal();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 
