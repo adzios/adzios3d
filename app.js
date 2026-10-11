@@ -1227,21 +1227,70 @@ document.addEventListener('DOMContentLoaded', () => {
       const mailSubject = `📥 Zapytanie z Adzios3D: ${subjectText} od ${name}`;
       const mailBody = `Dzień dobry,\n\nOto moje zapytanie ze strony Adzios3D:\n\n• Imię / Nick: ${name}\n• Kontakt (E-mail / Tel): ${email}\n• Temat: ${subjectText}\n\nTreść wiadomości:\n${message}\n\n---\nWysłano ze strony Adzios3D`;
 
-      // Set button to loading state
-      const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<span>Wysyłanie wiadomości...</span> <svg class="spinner-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>`;
-      }
+      // Send Hub UI (No negative "Nie udało się" message!)
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=adzios3d@gmail.com&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+      const mailtoUrl = `mailto:adzios3d@gmail.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
 
       if (contactFeedback) {
         contactFeedback.style.display = 'block';
-        contactFeedback.className = 'form-feedback loading';
-        contactFeedback.innerHTML = `<span>Wysyłam Twoją wiadomość do <strong>adzios3d@gmail.com</strong>... Proszę czekać.</span>`;
+        contactFeedback.className = 'form-feedback send-hub';
+        contactFeedback.innerHTML = `
+          <div class="send-hub-title">
+            <span class="send-hub-badge">✨ Wiadomość przygotowana</span>
+            <strong>Wybierz wygodny dla Ciebie sposób wysyłki:</strong>
+          </div>
+          <p class="send-hub-sub">Treść zapytania została sformatowana. Wybierz dogodną opcję przekazania wiadomości do <strong>adzios3d@gmail.com</strong>:</p>
+          <div class="fallback-action-buttons">
+            <a href="${gmailUrl}" target="_blank" rel="noopener" class="fallback-btn gmail-btn" id="sendViaGmailBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              </svg>
+              <span>Wyślij przez Gmail (Web / Aplikacja)</span>
+            </a>
+            <button type="button" class="fallback-btn copy-btn" id="copyQueryBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Kopiuj treść do schowka</span>
+            </button>
+            <a href="${mailtoUrl}" class="fallback-btn mailto-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <span>Domyślny program pocztowy</span>
+            </a>
+          </div>
+        `;
+
+        const copyBtn = document.getElementById('copyQueryBtn');
+        if (copyBtn) {
+          copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(mailBody).then(() => {
+              copyBtn.innerHTML = `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Skopiowano do schowka!</span>
+              `;
+              showToast('📋 Treść wiadomości skopiowana do schowka!');
+              setTimeout(() => {
+                copyBtn.innerHTML = `
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopiuj treść do schowka</span>
+                `;
+              }, 3000);
+            }).catch(() => {
+              prompt('Skopiuj treść zapytania:', mailBody);
+            });
+          });
+        }
       }
 
+      showToast('✨ Wiadomość gotowa – wybierz sposób wysłania!');
+
+      // Silent backup submission via FormSubmit (no error alerts)
       try {
-        const response = await fetch('https://formsubmit.co/ajax/adzios3d@gmail.com', {
+        fetch('https://formsubmit.co/ajax/adzios3d@gmail.com', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -1253,70 +1302,10 @@ document.addEventListener('DOMContentLoaded', () => {
             'Temat': subjectText,
             'Wiadomość': message,
             '_subject': mailSubject,
-            '_captcha': 'false',
-            '_template': 'table'
+            '_captcha': 'false'
           })
-        });
-
-        const data = await response.json().catch(() => ({}));
-
-        if (response.ok || data.success === 'true' || data.success === true) {
-          if (contactFeedback) {
-            contactFeedback.className = 'form-feedback success';
-            contactFeedback.innerHTML = `
-              <strong>✅ Wiadomość została pomyślnie wysłana!</strong>
-              <p>Dziękuję <strong>${name}</strong>! Twoje zapytanie dotarło bezpośrednio do mnie na <strong>adzios3d@gmail.com</strong>. Odpowiem najszybciej jak to możliwe.</p>
-            `;
-          }
-          showToast('✅ Wiadomość wysłana pomyślnie!');
-          contactForm.reset();
-        } else {
-          throw new Error(data.message || 'Błąd wysyłki');
-        }
-      } catch (err) {
-        // Fallback with webmail links & copy button (no auto system popup!)
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=adzios3d@gmail.com&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
-        const mailtoUrl = `mailto:adzios3d@gmail.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
-
-        if (contactFeedback) {
-          contactFeedback.className = 'form-feedback error';
-          contactFeedback.innerHTML = `
-            <strong>📬 Twoja treść jest gotowa do wysłania!</strong>
-            <p>Nie udało się wysłać automatycznie w tle. Wybierz dogodny dla Ciebie sposób:</p>
-            <div class="fallback-action-buttons">
-              <a href="${gmailUrl}" target="_blank" rel="noopener" class="fallback-btn gmail-btn">
-                <span>Wyślij przez Gmail w przeglądarce</span>
-              </a>
-              <button type="button" class="fallback-btn copy-btn" id="copyQueryBtn">
-                <span>📋 Kopiuj treść zapytania</span>
-              </button>
-              <a href="${mailtoUrl}" class="fallback-btn mailto-btn">
-                <span>Otwórz program pocztowy</span>
-              </a>
-            </div>
-          `;
-
-          const copyBtn = document.getElementById('copyQueryBtn');
-          if (copyBtn) {
-            copyBtn.addEventListener('click', () => {
-              navigator.clipboard.writeText(mailBody).then(() => {
-                copyBtn.innerHTML = '<span>✅ Skopiowano do schowka!</span>';
-                showToast('📋 Treść wiadomości skopiowana do schowka!');
-                setTimeout(() => {
-                  copyBtn.innerHTML = '<span>📋 Kopiuj treść zapytania</span>';
-                }, 3000);
-              }).catch(() => {
-                prompt('Skopiuj treść zapytania:', mailBody);
-              });
-            });
-          }
-        }
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalBtnHtml;
-        }
-      }
+        }).catch(() => {});
+      } catch (err) {}
     });
   }
 
