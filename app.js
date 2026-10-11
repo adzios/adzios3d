@@ -1203,8 +1203,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // 9. CONTACT FORM SUBMISSION (HYBRID ULTRA-RELIABLE DELIVERY TO ADZIOS3D@GMAIL.COM)
   // =========================================================================
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const submitBtn = document.getElementById('contactSubmitBtn');
       const name = document.getElementById('contactName').value.trim();
       const email = document.getElementById('contactEmail').value.trim();
       const subjectSelect = document.getElementById('contactSubject');
@@ -1214,54 +1215,108 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!subjectVal) {
         showToast('⚠️ Proszę wybrać temat wiadomości z listy.');
-        alert('Proszę wybrać temat wiadomości z listy.');
-        subjectSelect.focus();
+        if (subjectSelect) subjectSelect.focus();
         return;
       }
 
       if (!name || !email || !message) {
-        alert('Proszę wypełnić wszystkie wymagane pola formularza.');
+        showToast('⚠️ Proszę wypełnić wszystkie wymagane pola.');
         return;
       }
 
-      // Prepare mailto pre-filled link
       const mailSubject = `📥 Zapytanie z Adzios3D: ${subjectText} od ${name}`;
-      const mailBody = `Dzień dobry,\n\nOto moje zapytanie ze strony Adzios3D:\n\n• Imię / Nick: ${name}\n• Kontakt (E-mail / Tel): ${email}\n• Temat: ${subjectText}\n\nTreść wiadomości:\n${message}\n\n---\nWysłano z formularza Adzios3D`;
+      const mailBody = `Dzień dobry,\n\nOto moje zapytanie ze strony Adzios3D:\n\n• Imię / Nick: ${name}\n• Kontakt (E-mail / Tel): ${email}\n• Temat: ${subjectText}\n\nTreść wiadomości:\n${message}\n\n---\nWysłano ze strony Adzios3D`;
 
-      const mailtoUrl = `mailto:adzios3d@gmail.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
-
-      // 1. Open user's email client / Gmail directly with pre-filled content
-      window.location.href = mailtoUrl;
-
-      // 2. Try background API fetch as secondary route
-      try {
-        const formData = new FormData();
-        formData.append('Imię', name);
-        formData.append('Kontakt', email);
-        formData.append('Temat', subjectText);
-        formData.append('Wiadomość', message);
-        formData.append('_subject', mailSubject);
-
-        fetch('https://formsubmit.co/ajax/adzios3d@gmail.com', {
-          method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: formData
-        }).catch(() => {});
-      } catch (err) {}
-
-      // 3. Display UI feedback
-      if (contactFeedback) {
-        contactFeedback.style.display = 'block';
-        contactFeedback.className = 'form-feedback success';
-        contactFeedback.textContent = `Dziękuję ${name}! Przygotowano wiadomość do adzios3d@gmail.com. Otwarto Twój program pocztowy / Gmail z gotową treścią – kliknij Wyślij w swoim programie pocztowym!`;
+      // Set button to loading state
+      const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<span>Wysyłanie wiadomości...</span> <svg class="spinner-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>`;
       }
 
-      showToast('🚀 Otwarto program pocztowy z przygotowaną treścią!');
-      contactForm.reset();
+      if (contactFeedback) {
+        contactFeedback.style.display = 'block';
+        contactFeedback.className = 'form-feedback loading';
+        contactFeedback.innerHTML = `<span>Wysyłam Twoją wiadomość do <strong>adzios3d@gmail.com</strong>... Proszę czekać.</span>`;
+      }
 
-      setTimeout(() => {
-        if (contactFeedback) contactFeedback.style.display = 'none';
-      }, 12000);
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/adzios3d@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            'Imię': name,
+            'Kontakt': email,
+            'Temat': subjectText,
+            'Wiadomość': message,
+            '_subject': mailSubject,
+            '_captcha': 'false',
+            '_template': 'table'
+          })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (response.ok || data.success === 'true' || data.success === true) {
+          if (contactFeedback) {
+            contactFeedback.className = 'form-feedback success';
+            contactFeedback.innerHTML = `
+              <strong>✅ Wiadomość została pomyślnie wysłana!</strong>
+              <p>Dziękuję <strong>${name}</strong>! Twoje zapytanie dotarło bezpośrednio do mnie na <strong>adzios3d@gmail.com</strong>. Odpowiem najszybciej jak to możliwe.</p>
+            `;
+          }
+          showToast('✅ Wiadomość wysłana pomyślnie!');
+          contactForm.reset();
+        } else {
+          throw new Error(data.message || 'Błąd wysyłki');
+        }
+      } catch (err) {
+        // Fallback with webmail links & copy button (no auto system popup!)
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=adzios3d@gmail.com&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+        const mailtoUrl = `mailto:adzios3d@gmail.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+
+        if (contactFeedback) {
+          contactFeedback.className = 'form-feedback error';
+          contactFeedback.innerHTML = `
+            <strong>📬 Twoja treść jest gotowa do wysłania!</strong>
+            <p>Nie udało się wysłać automatycznie w tle. Wybierz dogodny dla Ciebie sposób:</p>
+            <div class="fallback-action-buttons">
+              <a href="${gmailUrl}" target="_blank" rel="noopener" class="fallback-btn gmail-btn">
+                <span>Wyślij przez Gmail w przeglądarce</span>
+              </a>
+              <button type="button" class="fallback-btn copy-btn" id="copyQueryBtn">
+                <span>📋 Kopiuj treść zapytania</span>
+              </button>
+              <a href="${mailtoUrl}" class="fallback-btn mailto-btn">
+                <span>Otwórz program pocztowy</span>
+              </a>
+            </div>
+          `;
+
+          const copyBtn = document.getElementById('copyQueryBtn');
+          if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+              navigator.clipboard.writeText(mailBody).then(() => {
+                copyBtn.innerHTML = '<span>✅ Skopiowano do schowka!</span>';
+                showToast('📋 Treść wiadomości skopiowana do schowka!');
+                setTimeout(() => {
+                  copyBtn.innerHTML = '<span>📋 Kopiuj treść zapytania</span>';
+                }, 3000);
+              }).catch(() => {
+                prompt('Skopiuj treść zapytania:', mailBody);
+              });
+            });
+          }
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml;
+        }
+      }
     });
   }
 
