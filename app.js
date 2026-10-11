@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </button>
         ` : '';
 
-        mediaHtml = `<img src="${imagesList[0]}" alt="${item.title}" class="product-img" loading="lazy">${dotsHtml}`;
+        mediaHtml = `<img src="${imagesList[0]}" alt="${item.title}" class="product-img" loading="lazy" decoding="async">${dotsHtml}`;
       } else {
         mediaHtml = item.svgIcon;
       }
@@ -540,7 +540,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const thumbsHtml = hasMultipleImages ? `
         <div class="modal-thumbnails-row" id="modalThumbsRow">
           ${imagesList.map((img, idx) => `
-            <img src="${img}" class="modal-thumb-img ${idx === 0 ? 'active' : ''}" data-idx="${idx}" alt="Miniaturka ${idx + 1}">
+            <img src="${img}" class="modal-thumb-img ${idx === 0 ? 'active' : ''}" data-idx="${idx}" alt="Miniaturka ${idx + 1}" loading="lazy" decoding="async">
           `).join('')}
         </div>
       ` : '';
@@ -557,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
       modalMediaHtml = `
         <div class="modal-gallery-wrap">
           ${arrowsHtml}
-          <img src="${imagesList[0]}" alt="${item.title}" id="modalMainImg" class="modal-product-img">
+          <img src="${imagesList[0]}" alt="${item.title}" id="modalMainImg" class="modal-product-img" decoding="async">
         </div>
         ${thumbsHtml}
       `;
@@ -760,7 +760,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const favItems = products.filter(p => wishlist.includes(p.id));
       wishlistItemsList.innerHTML = favItems.map(p => {
         const thumb = p.imageSrc
-          ? `<div class="wishlist-thumb"><img src="${p.imageSrc}" alt="${p.title}" loading="lazy"></div>`
+          ? `<div class="wishlist-thumb"><img src="${p.imageSrc}" alt="${p.title}" loading="lazy" decoding="async"></div>`
           : `<div class="wishlist-thumb">${p.svgIcon}</div>`;
         return `
           <div class="wishlist-item" data-id="${p.id}">
