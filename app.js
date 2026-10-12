@@ -949,15 +949,48 @@ document.addEventListener('DOMContentLoaded', () => {
   // 9. CONTACT FORM SUBMISSION (HYBRID ULTRA-RELIABLE DELIVERY TO ADZIOS3D@GMAIL.COM)
   // =========================================================================
   if (contactForm) {
+    const contactEmailInput = document.getElementById('contactEmail');
+    if (contactEmailInput) {
+      contactEmailInput.addEventListener('input', () => {
+        contactEmailInput.classList.remove('is-invalid');
+      });
+    }
+
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = document.getElementById('contactSubmitBtn');
       const name = document.getElementById('contactName').value.trim();
-      const email = document.getElementById('contactEmail').value.trim();
+      const email = contactEmailInput ? contactEmailInput.value.trim() : '';
       const subjectSelect = document.getElementById('contactSubject');
       const subjectVal = subjectSelect ? subjectSelect.value : '';
       const subjectText = (subjectSelect && subjectSelect.selectedIndex >= 0) ? subjectSelect.options[subjectSelect.selectedIndex].text : 'Zapytanie';
       const message = contactMessage.value.trim();
+
+      if (!name) {
+        showToast('⚠️ Proszę podać swoje imię lub nick.');
+        const nameInput = document.getElementById('contactName');
+        if (nameInput) nameInput.focus();
+        return;
+      }
+
+      const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+      if (!email) {
+        showToast('⚠️ Adres e-mail jest wymagany.');
+        if (contactEmailInput) {
+          contactEmailInput.classList.add('is-invalid');
+          contactEmailInput.focus();
+        }
+        return;
+      }
+
+      if (!emailRegex.test(email)) {
+        showToast('⚠️ Wprowadź poprawny adres e-mail (np. twoj-email@domena.pl).');
+        if (contactEmailInput) {
+          contactEmailInput.classList.add('is-invalid');
+          contactEmailInput.focus();
+        }
+        return;
+      }
 
       if (!subjectVal) {
         showToast('⚠️ Proszę wybrać temat wiadomości z listy.');
@@ -965,13 +998,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      if (!name || !email || !message) {
-        showToast('⚠️ Proszę wypełnić wszystkie wymagane pola.');
+      if (!message) {
+        showToast('⚠️ Proszę wpisać treść wiadomości.');
+        if (contactMessage) contactMessage.focus();
         return;
       }
 
       const mailSubject = `📥 Zapytanie z Adzios3D: ${subjectText} od ${name}`;
-      const mailBody = `Dzień dobry,\n\nOto moje zapytanie ze strony Adzios3D:\n\n• Imię / Nick: ${name}\n• Kontakt (E-mail / Tel): ${email}\n• Temat: ${subjectText}\n\nTreść wiadomości:\n${message}\n\n---\nWysłano ze strony Adzios3D`;
+      const mailBody = `Dzień dobry,\n\nOto moje zapytanie ze strony Adzios3D:\n\n• Imię / Nick: ${name}\n• Adres e-mail: ${email}\n• Temat: ${subjectText}\n\nTreść wiadomości:\n${message}\n\n---\nWysłano ze strony Adzios3D`;
 
       // Send Hub UI (No negative "Nie udało się" message!)
       const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=adzios3d@gmail.com&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;

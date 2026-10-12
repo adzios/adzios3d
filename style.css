@@ -1336,6 +1336,13 @@ svg {
   box-shadow: 0 0 15px var(--accent-orange-glow);
 }
 
+.form-input.is-invalid,
+.form-textarea.is-invalid,
+.custom-select.is-invalid {
+  border-color: #EF4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.25) !important;
+}
+
 .form-textarea {
   resize: vertical;
 }
