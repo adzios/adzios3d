@@ -1005,7 +1005,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const mailSubject = `📥 Zapytanie z Adzios3D: ${subjectText} od ${name}`;
-      const mailBody = `Dzień dobry,\n\nOto moje zapytanie ze strony Adzios3D:\n\n• Imię / Nick: ${name}\n• Adres e-mail: ${email}\n• Temat: ${subjectText}\n\nTreść wiadomości:\n${message}\n\n---\nWysłano ze strony Adzios3D`;
+      const mailBody = `Dzień dobry,\n\nOto moje zapytanie ze strony Adzios3D:\n\n• Imię / Nick: ${name}\n• Twój adres e-mail: ${email}\n• Temat: ${subjectText}\n\nTreść wiadomości:\n${message}\n\n---\nWysłano ze strony Adzios3D`;
 
       // Send Hub UI (No negative "Nie udało się" message!)
       const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=adzios3d@gmail.com&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
